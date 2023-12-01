@@ -1,19 +1,16 @@
 import re
-from aocd import Puzzle
+from aocd.models import Puzzle
 
 puzzle = Puzzle(year=2023, day=1)
 
 
-def part_a(lines):
+def part_a(puzzle):
+    lines = puzzle.input_data.splitlines()
     tot = 0
     for x in lines:
         ints = re.findall(r"\d", x)
         tot += int(ints[0] + ints[-1])
     return tot
-
-
-lines = puzzle.input_data.splitlines()
-part_a(lines)
 
 
 def convert_num(x):
@@ -39,13 +36,11 @@ def convert_num(x):
     }[x]
 
 
-def part_b(lines):
+def part_b(puzzle):
+    lines = puzzle.input_data.splitlines()
     tot = 0
     for x in lines:
         ints = re.findall(r"(?=(one|two|three|four|five|six|seven|eight|nine|\d))", x)
         ints = [convert_num(n) for n in ints]
         tot += int(ints[0] + ints[-1])
     return tot
-
-
-part_b(lines)

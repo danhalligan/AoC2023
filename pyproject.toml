@@ -1,15 +1,20 @@
 [tool.poetry]
 name = "aoc2023"
 version = "0.1.0"
-description = ""
+description = "Solutions to Advent of Code 2023 problems"
 authors = ["Daniel Halligan <dan.halligan@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
 aocd = "^0.1"
+typer = "^0.9.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.scripts]
+aoc2023 = "aoc2023.cli:main"
