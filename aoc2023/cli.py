@@ -14,11 +14,11 @@ def solve(day: str):
     print(f"--- Day {day}: {puzzle.title} ---")
 
     try:
-        print("Part A:", getattr(module, "part_a")(puzzle))
+        print("Part A:", getattr(module, "part_a")(puzzle.input_data))
     except AttributeError:
         print("No part A")
     try:
-        print("Part B:", getattr(module, "part_b")(puzzle))
+        print("Part B:", getattr(module, "part_b")(puzzle.input_data))
     except AttributeError:
         print("No part B")
     print()
@@ -30,11 +30,11 @@ def submit(day: str):
     module = importlib.import_module(f"aoc2023.day{day:02d}")
     puzzle = Puzzle(year=2023, day=day)
     try:
-        puzzle.answer_a = getattr(module, "part_a")(puzzle)
+        puzzle.answer_a = getattr(module, "part_a")(puzzle.input_data)
     except AttributeError:
         print("No part A")
     try:
-        puzzle.answer_b = getattr(module, "part_b")(puzzle)
+        puzzle.answer_b = getattr(module, "part_b")(puzzle.input_data)
     except AttributeError:
         print("No part B")
 

@@ -6,8 +6,8 @@ def calibration_values(line):
     return ints[0] + ints[-1]
 
 
-def part_a(puzzle):
-    lines = puzzle.input_data.splitlines()
+def part_a(data):
+    lines = data.splitlines()
     return sum(int(calibration_values(line)) for line in lines)
 
 
@@ -31,6 +31,6 @@ def calibration_values_fixed(line):
     return convert_num(ints[0]) + convert_num(ints[-1])
 
 
-def part_b(puzzle):
-    lines = puzzle.input_data.splitlines()
+def part_b(data):
+    lines = data.splitlines()
     return sum(int(calibration_values_fixed(line)) for line in lines)
