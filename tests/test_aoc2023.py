@@ -1,8 +1,10 @@
 import importlib
 import pytest
 from itertools import product
-from aocd.models import Puzzle
 from aocd.examples import Example
+import pickle
+
+all_examples = pickle.load(open("tests/examples.pkl", "rb"))
 
 
 # Test each day by importing the module and running part_a and part_b functions
@@ -15,13 +17,12 @@ def test_all(day, part):
         fn = getattr(module, f"part_{part}")
     except AttributeError:
         pytest.skip(f"Skipping day {day}, part {part}")
-    puzzle = Puzzle(year=2023, day=day)
-    examples = puzzle.examples
+    examples = all_examples[day]
 
     # Patch examples for day 1
     # TODO: there's a better way of doing this!
     if day == 1:
-        eg = puzzle.examples[0]
+        eg = examples[0]
         examples = [Example(eg.input_data, eg.answer_a)]
 
     for example in examples:
