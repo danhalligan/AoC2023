@@ -6,11 +6,6 @@ def calibration_values(line):
     return ints[0] + ints[-1]
 
 
-def part_a(data):
-    lines = data.splitlines()
-    return sum(int(calibration_values(line)) for line in lines)
-
-
 def convert_num(x):
     d = {
         "one": "1",
@@ -29,6 +24,11 @@ def convert_num(x):
 def calibration_values_fixed(line):
     ints = re.findall(r"(?=(one|two|three|four|five|six|seven|eight|nine|\d))", line)
     return convert_num(ints[0]) + convert_num(ints[-1])
+
+
+def part_a(data):
+    lines = data.splitlines()
+    return sum(int(calibration_values(line)) for line in lines)
 
 
 def part_b(data):
