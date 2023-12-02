@@ -1,24 +1,19 @@
 import re
 from math import prod
+from collections import defaultdict
 
 
 def parse_subset(subset):
-    seen = []
     for draw in subset.split(", "):
-        draw = draw.split(" ")[::-1]
-        seen += [draw[0]]
-        draw[1] = int(draw[1])
-        yield draw
-    for col in ["red", "green", "blue"]:
-        if col not in seen:
-            yield [col, 0]
+        draw = draw.split(" ")
+        yield draw[1], int(draw[0])
 
 
 def parse_line(line):
     game, results = line.split(": ")
-    game = int(re.findall("\d+", game)[0])
+    game = int(re.findall(r"\d+", game)[0])
     subsets = results.split("; ")
-    subsets = [dict(parse_subset(subset)) for subset in subsets]
+    subsets = [defaultdict(int, parse_subset(subset)) for subset in subsets]
     return {"id": game, "subsets": subsets}
 
 
