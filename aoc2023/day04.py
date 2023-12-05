@@ -1,14 +1,16 @@
 import re
 
 
+def ints(x):
+    return [int(i) for i in re.findall(r"\d+", x)]
+
+
 def parse_data(data):
     lines = data.splitlines()
     for line in lines:
         _, nums = line.split(": ")
         winning, mine = nums.split(" | ")
-        winning = [int(x) for x in re.findall(r"\d+", winning)]
-        mine = [int(x) for x in re.findall(r"\d+", mine)]
-        yield sum(num in winning for num in mine)
+        yield sum(num in ints(winning) for num in ints(mine))
 
 
 def part_a(data):
