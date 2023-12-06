@@ -12,17 +12,18 @@
 First you need to [setup your session ID] as this package uses 
 [`advent-of-code-data`] to retrieve the data input.
 
-To solve a specific day, you can use `solve`, passing in the day(s) to solve.
-
-``` bash
-poetry run aoc2023 1 2
-```
-
-Or to solve all days (where available).
+To solve all days (where available) run:
 
 ``` bash
 poetry run aoc2023
 ```
+
+Or to solve specific day(s) (e.g. days 1 and 5):
+
+``` bash
+poetry run aoc2023 1 5
+```
+
 
 [Advent of Code 2023]: https://adventofcode.com/2023
 [setup your session ID]: https://github.com/wimglenn/advent-of-code-data/tree/main#quickstart
