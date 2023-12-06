@@ -65,10 +65,10 @@ def map_source(ra, section):
         unmapped = []
         for ra in tomap:
             overlap = intersection(ra, src)
-            if ra.start < src.start:
-                unmapped += [range(ra.start, min(ra.stop, src.start))]
             if len(overlap):
                 mapped += [map_range(overlap, src, dest)]
+            if ra.start < src.start:
+                unmapped += [range(ra.start, min(ra.stop, src.start))]
             if ra.stop > src.stop:
                 unmapped += [range(max(ra.start, src.stop), ra.stop)]
         tomap = unmapped

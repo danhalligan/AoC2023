@@ -12,11 +12,13 @@ def get_examples(day):
     examples = puzzle.examples
 
     # Patch examples for day 1
-    # TODO: there's a better way of doing this!
+    # TODO: there must be a better way of doing this!
+    eg = puzzle.examples[0]
     if day == 1:
-        eg = puzzle.examples[0]
         examples = [Example(eg.input_data, eg.answer_a)]
 
+    if day == 6:
+        examples = [Example(eg.input_data, "288", "71503")]
     return day, examples
 
 
