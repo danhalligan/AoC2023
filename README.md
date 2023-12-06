@@ -9,16 +9,21 @@
 
 ## Example
 
+First you need to [setup your session ID] as this package uses 
+[`advent-of-code-data`] to retrieve the data input.
+
 To solve a specific day, you can use `solve`, passing in the day(s) to solve.
 
 ``` bash
-poetry run aoc2023 solve 1 2
+poetry run aoc2023 1 2
 ```
 
 Or to solve all days (where available).
 
 ``` bash
-poetry run aoc2023 solve
+poetry run aoc2023
 ```
 
 [Advent of Code 2023]: https://adventofcode.com/2023
+[setup your session ID]: https://github.com/wimglenn/advent-of-code-data/tree/main#quickstart
+[`advent-of-code-data`]: https://github.com/wimglenn/advent-of-code-data/
