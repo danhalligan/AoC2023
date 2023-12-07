@@ -1,5 +1,5 @@
 import typer
-from typing import List, Optional
+from typing import List
 import importlib
 from datetime import datetime
 from aocd.models import Puzzle
