@@ -7,18 +7,8 @@ def calibration_values(line):
 
 
 def convert_num(x):
-    d = {
-        "one": "1",
-        "two": "2",
-        "three": "3",
-        "four": "4",
-        "five": "5",
-        "six": "6",
-        "seven": "7",
-        "eight": "8",
-        "nine": "9",
-    }
-    return d[x] if x in d else x
+    ints = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+    return str(ints.index(x) + 1) if x in ints else x
 
 
 def calibration_values_fixed(line):
