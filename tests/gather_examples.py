@@ -16,9 +16,10 @@ def get_examples(day):
     eg = puzzle.examples[0]
     if day == 1:
         examples = [Example(eg.input_data, eg.answer_a)]
-
     if day == 6:
         examples = [Example(eg.input_data, "288", "71503")]
+    if day == 8:
+        examples = [Example(eg.input_data, "2", None)]
     return day, examples
 
 
