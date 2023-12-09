@@ -40,5 +40,4 @@ def part_b(data):
             steps[start] += 1
             if node.endswith("Z"):
                 break
-
     return lcm(*steps.values())
