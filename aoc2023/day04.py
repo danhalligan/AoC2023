@@ -1,4 +1,3 @@
-import re
 from .helpers import ints
 
 

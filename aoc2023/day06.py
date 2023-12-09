@@ -1,4 +1,3 @@
-import re
 from math import ceil, floor, prod, sqrt
 from .helpers import ints
 
