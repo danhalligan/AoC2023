@@ -59,14 +59,14 @@ def find_path(start, data):
 # This way, we can flood fill from the outside and we'll reach
 # all cells considered exterior to path.
 def expand_path(path):
-    expanded = defaultdict(bool)
+    expanded = set()
     for x in path:
-        expanded[(x[0] * 2, x[1] * 2)] = True
+        expanded.add((x[0] * 2, x[1] * 2))
     for p1, p2 in pairwise(path + [path[0]]):
         if p1[0] != p2[0]:
-            expanded[p1[0] * 2 + (p2[0] - p1[0]), p1[1] * 2] = True
+            expanded.add((p1[0] * 2 + (p2[0] - p1[0]), p1[1] * 2))
         else:
-            expanded[p1[0] * 2, p1[1] * 2 + (p2[1] - p1[1])] = True
+            expanded.add((p1[0] * 2, p1[1] * 2 + (p2[1] - p1[1])))
     return expanded
 
 
@@ -82,7 +82,7 @@ def flood(path):
         x, y = queue.pop(0)
         for nx, ny in [(x + 1, y), (x, y + 1), (x - 1, y), (x, y - 1)]:
             if nx >= -1 and ny >= -1 and nx <= mx + 1 and ny <= my + 1:
-                if not path[nx, ny] and (nx, ny) not in seen:
+                if (nx, ny) not in path and (nx, ny) not in seen:
                     seen.add((nx, ny))
                     queue.append((nx, ny))
     return seen
@@ -100,10 +100,10 @@ def part_b(data):
     expanded = expand_path(list(visited.keys()))
     outside = flood(expanded)
     count = 0
-    rx = max(x for x, _ in outside)
-    ry = max(y for _, y in outside)
-    for i in range(0, rx, 2):
-        for y in range(0, ry, 2):
+    mx = max(x for x, _ in outside)
+    my = max(y for _, y in outside)
+    for i in range(0, mx, 2):
+        for y in range(0, my, 2):
             if (i, y) not in outside and (i, y) not in expanded:
                 count += 1
     return count
