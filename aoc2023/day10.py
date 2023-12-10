@@ -25,34 +25,26 @@ def parse_data(data):
     return start, grid
 
 
-# Follow path
-# Doesn't actually need BFS algorithm because there's only
-# ever one "next" square, but I had this algorithm hanging around.
-def bfs(start, data):
-    firsts = list(neighbours(start, data))
-    if not len(firsts):
-        return [], None
-    first = firsts[0]
-    visited = {start: 0, first: 1}
-    queue = [first]
-    loop = None
+# Try to follow a path
+def try_path(start, data):
+    visited = {start: 0}
+    queue = [start]
     while queue:
         pos = queue.pop(0)
-        for neighbour in neighbours(pos, data):
-            if visited[pos] > 1 and neighbour == start:
-                loop = visited[pos] + 1
-            if neighbour not in visited:
-                visited[neighbour] = visited[pos] + 1
-                queue.append(neighbour)
-    return visited, loop
+        nbs = [nb for nb in neighbours(pos, data) if nb not in visited]
+        if nbs:
+            nb = nbs[0]
+            visited[nb] = visited[pos] + 1
+            queue.append(nb)
+    return visited
 
 
 def find_path(start, data):
     for opt in ["|", "-", "L", "J", "7", "F"]:
         data[start] = opt
-        visited, loop = bfs(start, data)
-        if loop is not None:
-            return visited, loop
+        visited = try_path(start, data)
+        if len(visited) > 1:
+            return visited
 
 
 # Expand path by doubling coordinates
@@ -63,10 +55,7 @@ def expand_path(path):
     for x in path:
         expanded.add((x[0] * 2, x[1] * 2))
     for p1, p2 in pairwise(path + [path[0]]):
-        if p1[0] != p2[0]:
-            expanded.add((p1[0] * 2 + (p2[0] - p1[0]), p1[1] * 2))
-        else:
-            expanded.add((p1[0] * 2, p1[1] * 2 + (p2[1] - p1[1])))
+        expanded.add((p1[0] + p2[0], p1[1] + p2[1]))
     return expanded
 
 
@@ -90,13 +79,13 @@ def flood(path):
 
 def part_a(data):
     start, data = parse_data(data)
-    _, loop = find_path(start, data)
-    return loop // 2
+    visited = find_path(start, data)
+    return len(visited) // 2
 
 
 def part_b(data):
     start, data = parse_data(data)
-    visited, _ = find_path(start, data)
+    visited = find_path(start, data)
     expanded = expand_path(list(visited.keys()))
     outside = flood(expanded)
     count = 0
