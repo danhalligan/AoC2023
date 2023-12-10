@@ -20,6 +20,8 @@ def get_examples(day):
         examples = [Example(eg.input_data, "288", "71503")]
     if day == 8:
         examples = [Example(eg.input_data, "2", None)]
+    if day == 10:
+        examples = [Example("..F7.\n.FJ|.\nSJ.L7\n|F--J\nLJ...", "8", None)]
     return day, examples
 
 
