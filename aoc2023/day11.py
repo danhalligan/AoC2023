@@ -13,21 +13,21 @@ def parse_data(data):
     return rows, cols, galaxies
 
 
-def dist(pair, rows, cols, multiplier=1):
+def dist(a, b, gaps, multiplier):
+    a, b = sorted([a, b])
+    return (b - a) + sum([x in range(a, b + 1) for x in gaps]) * multiplier
+
+
+def pdist(pair, rows, cols, multiplier=1):
     (x1, y1), (x2, y2) = pair
-    x1, x2 = sorted([x1, x2])
-    y1, y2 = sorted([y1, y2])
-    tot = abs((x2 - x1)) + abs((y2 - y1))
-    tot += sum([x in range(x1, x2 + 1) for x in rows]) * multiplier
-    tot += sum([x in range(y1, y2 + 1) for x in cols]) * multiplier
-    return tot
+    return dist(x1, x2, rows, multiplier) + dist(y1, y2, cols, multiplier)
 
 
 def part_a(data):
     r, c, g = parse_data(data)
-    return sum(dist(x, r, c) for x in combinations(g, 2))
+    return sum(pdist(x, r, c) for x in combinations(g, 2))
 
 
 def part_b(data):
     r, c, g = parse_data(data)
-    return sum(dist(x, r, c, 999999) for x in combinations(g, 2))
+    return sum(pdist(x, r, c, 999999) for x in combinations(g, 2))
