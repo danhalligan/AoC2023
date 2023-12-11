@@ -25,7 +25,7 @@ def parse_data(data):
     return start, grid
 
 
-# Try to follow a path
+# Try to follow path
 def try_path(start, data):
     visited = {start: 0}
     queue = [start]
