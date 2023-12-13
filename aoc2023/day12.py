@@ -1,37 +1,12 @@
-# from more_itertools import distinct_permutations
-# from itertools import groupby
 from functools import cache
-
-
-# Nasty original hack commented...
-# def rle(txt, repl):
-#     k = 0
-#     txt = list(txt)
-#     for i in range(len(txt)):
-#         if txt[i] == "?":
-#             txt[i] = repl[k]
-#             k += 1
-#     return [len(list(y)) for x, y in groupby(txt) if x == "#"]
-#
-#
-# def part_a(data):
-#     tot = 0
-#     for line in data.splitlines():
-#         txt, counts = line.split(" ")
-#         counts = [int(x) for x in counts.split(",")]
-#         nbroken = sum(counts) - txt.count("#")
-#         nmissing = txt.count("?")
-#         v = ["#"] * nbroken + ["."] * (nmissing - nbroken)
-#         tot += len(
-#             [p for p in distinct_permutations(v, len(v)) if rle(txt, p) == counts]
-#         )
-#     return tot
 
 
 def drop1(counts):
     return tuple([counts[0] - 1] + list(counts[1:]))
 
 
+# `in_run` tracks if we're in a run of "#"s (in other words, if last character
+# was a "#")
 @cache
 def complete(txt, counts, in_run=False):
     if not len(txt):
