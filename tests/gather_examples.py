@@ -22,6 +22,14 @@ def get_examples(day):
         examples = [Example(eg.input_data, "2", None)]
     if day == 10:
         examples = [Example("..F7.\n.FJ|.\nSJ.L7\n|F--J\nLJ...", "8", None)]
+    if day == 12:
+        examples = [
+            Example(
+                "???.### 1,1,3\n.??..??...?##. 1,1,3\n?#?#?#?#?#?#?#? 1,3,1,6\n????.#...#... 4,1,1\n????.######..#####. 1,6,5\n?###???????? 3,2,1",
+                "21",
+                "525152",
+            )
+        ]
     return day, examples
 
 

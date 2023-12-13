@@ -18,16 +18,16 @@ def dist(a, b, gaps, multiplier):
     return (b - a) + sum([x in range(a, b + 1) for x in gaps]) * multiplier
 
 
-def pdist(pair, rows, cols, multiplier=1):
+def pair_dist(pair, rows, cols, multiplier=1):
     (x1, y1), (x2, y2) = pair
     return dist(x1, x2, rows, multiplier) + dist(y1, y2, cols, multiplier)
 
 
 def part_a(data):
     r, c, g = parse_data(data)
-    return sum(pdist(x, r, c) for x in combinations(g, 2))
+    return sum(pair_dist(x, r, c) for x in combinations(g, 2))
 
 
 def part_b(data):
     r, c, g = parse_data(data)
-    return sum(pdist(x, r, c, 999999) for x in combinations(g, 2))
+    return sum(pair_dist(x, r, c, 999999) for x in combinations(g, 2))
