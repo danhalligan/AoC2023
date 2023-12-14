@@ -43,8 +43,8 @@ def solve(data, b=False):
         if b:
             txt = "?".join([txt] * 5)
             counts = ",".join([counts] * 5)
-        counts = [int(x) for x in counts.split(",")]
-        tot += complete(txt, tuple(counts))
+        counts = tuple(int(x) for x in counts.split(","))
+        tot += complete(txt, counts)
     return tot
 
 

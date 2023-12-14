@@ -17,6 +17,7 @@ pytest = "^7.4.3"
 aocd-example-parser = "^2023.2"
 black = "^23.11.0"
 pytest-cov = "^4.1.0"
+ipykernel = "^6.27.1"
 
 [build-system]
 requires = ["poetry-core"]
