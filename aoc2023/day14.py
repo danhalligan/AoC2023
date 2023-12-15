@@ -6,7 +6,7 @@ def parse(data):
     }
 
 
-# This fundtion rolls rocks, taking a list of list of tuples corresponding
+# This function rolls rocks, taking a list of list of tuples corresponding
 # to the indices in the array to consider.
 # This allows us to roll rocks in all 4 directions...
 def roll(rocks, vals):
@@ -62,7 +62,8 @@ def rockhash(rocks):
     return hash(frozenset(rocks.items()))
 
 
-# Generate cycles, where each cycle rolls rocks in all 4 directions
+# Generate cycles, where each cycle rolls rocks in all 4 directions and
+# yield the hashed state so we can find a repeated state...
 def cycles(rocks):
     while True:
         cycle(rocks)
@@ -84,5 +85,6 @@ def part_b(data):
         hashes += [val]
         loads += [load(rocks)]
 
-    burn_in, cycle_length = [i for i, x in enumerate(hashes) if val == x]
-    return loads[burn_in + ((1000000000 - burn_in) % (cycle_length - burn_in))]
+    burn_in, repeat = [i for i, x in enumerate(hashes) if val == x]
+    cycle_length = repeat - burn_in
+    return loads[burn_in + ((1000000000 - burn_in) % cycle_length)]
