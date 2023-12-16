@@ -1,11 +1,9 @@
 import re
+from functools import reduce
 
 
 def hash(string):
-    val = 0
-    for x in string:
-        val = (val + ord(x)) * 17 % 256
-    return val
+    return reduce(lambda v, x: (v + ord(x)) * 17 % 256, string, 0)
 
 
 def part_a(data):
@@ -24,7 +22,7 @@ def part_b(data):
             boxes[hash(box)][box] = int(num)
 
     return sum(
-        i * j * v 
+        i * j * v
         for i, x in enumerate(boxes, 1)
         for j, v in enumerate(x.values(), 1)
     )
