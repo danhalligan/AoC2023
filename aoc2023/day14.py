@@ -23,20 +23,22 @@ def roll(rocks, vals):
                 gaps += [val]
 
 
+def limits(rocks):
+    return max(i for i, _ in rocks.keys()), max(j for _, j in rocks.keys())
+
+
 # Calculate the "total load" for a configuration of rocks
 def load(rocks):
-    maxi = max(i for i, _ in rocks.keys())
-    maxj = max(j for _, j in rocks.keys())
-    tot = 0
-    for i in range(maxi + 1):
-        tot += (maxi - i + 1) * sum(rocks[i, j] == "O" for j in range(maxj + 1))
-    return tot
+    maxi, maxj = limits(rocks)
+    return sum(
+        (maxi - i + 1) * sum(rocks[i, j] == "O" for j in range(maxj + 1))
+        for i in range(maxi + 1)
+    )
 
 
 def part_a(data):
     rocks = parse(data)
-    maxi = max(i for i, _ in rocks.keys())
-    maxj = max(j for _, j in rocks.keys())
+    maxi, maxj = limits(rocks)
     vals = [[(i, j) for i in range(maxi + 1)] for j in range(maxj + 1)]
     roll(rocks, vals)
     return load(rocks)
@@ -44,8 +46,7 @@ def part_a(data):
 
 # Roll rocks in all 4 directions
 def cycle(rocks):
-    maxi = max(i for i, _ in rocks.keys())
-    maxj = max(j for _, j in rocks.keys())
+    maxi, maxj = limits(rocks)
     vals = [[(i, j) for i in range(maxi + 1)] for j in range(maxj + 1)]
     roll(rocks, vals)
     vals = [[(i, j) for j in range(maxj + 1)] for i in range(maxi + 1)]
@@ -56,34 +57,23 @@ def cycle(rocks):
     roll(rocks, vals)
 
 
-# Calculate a hash of a configuration of rocks
+# The goal here is to find a point when a rock layout repeats itself
+# To do this, we store a hash of a configuration of rocks
 # This is unique for a given configuration (which load is not!)
-def rockhash(rocks):
-    return hash(frozenset(rocks.items()))
-
-
-# Generate cycles, where each cycle rolls rocks in all 4 directions and
-# yield the hashed state so we can find a repeated state...
-def cycles(rocks):
-    while True:
-        cycle(rocks)
-        yield rockhash(rocks)
-
-
-# The goal here is to find a point when a rock hash repeats itself
-# (occurs twice). We will then have a "burn in" period to get to this value
-# first time, then a repeat size.
+# We then calculate a "burn in" period to get to the first value and the cycle
+# length till we get to it again.
 # This allows us to extrapolate to any future number of cycles...
 def part_b(data):
     rocks = parse(data)
-    hashes = [rockhash(rocks)]
-    loads = [load(rocks)]
+    hashes, loads = [], []
 
-    for val in cycles(rocks):
-        if sum(val == x for x in hashes) == 2:
+    while True:
+        val = hash(frozenset(rocks.items()))
+        if hashes.count(val) == 2:
             break
         hashes += [val]
         loads += [load(rocks)]
+        cycle(rocks)
 
     burn_in, repeat = [i for i, x in enumerate(hashes) if val == x]
     cycle_length = repeat - burn_in

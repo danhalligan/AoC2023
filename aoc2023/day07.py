@@ -29,7 +29,8 @@ def primary_score(hand):
 
 
 def card_order(card):
-    return ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"].index(card)
+    cards = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"]
+    return cards.index(card)
 
 
 def hand_order(hand):
@@ -57,7 +58,8 @@ def joker_score(hand):
 
 
 def new_card_order(card):
-    return ["A", "K", "Q", "T", "9", "8", "7", "6", "5", "4", "3", "2", "J"].index(card)
+    cards = ["A", "K", "Q", "T", "9", "8", "7", "6", "5", "4", "3", "2", "J"]
+    return cards.index(card)
 
 
 def new_hand_order(hand):

@@ -14,24 +14,17 @@ def part_a(data):
 
 def part_b(data):
     data = data.split(",")
-    boxes = [[]] * 256
+    boxes = [dict() for _ in range(256)]
 
     for instr in data:
         box, val, num = re.match("(.+)([=-])(\d+)*", instr).groups()
-        boxh = hash(box)
         if val == "-":
-            boxes[boxh] = [(l, v) for l, v in boxes[boxh] if l != box]
+            boxes[hash(box)].pop(box, 0)
         if val == "=":
-            num = int(num)
-            if box in [l for l, _ in boxes[boxh]]:
-                boxes[boxh] = [
-                    (box, num) if l == box else (l, v) for l, v in boxes[boxh]
-                ]
-            else:
-                boxes[boxh] = boxes[boxh] + [(box, num)]
+            boxes[hash(box)][box] = int(num)
 
-    tot = 0
-    for i, x in enumerate(boxes):
-        tot += sum((i + 1) * (j + 1) * v for j, (_, v) in enumerate(x))
-
-    return tot
+    return sum(
+        i * j * v 
+        for i, x in enumerate(boxes, 1)
+        for j, v in enumerate(x.values(), 1)
+    )

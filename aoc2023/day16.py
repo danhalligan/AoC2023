@@ -28,7 +28,7 @@ def reflect(d, tile):
         return {".": [D], "-": [L, R], "\\": [R], "/": [L], "|": [D]}[tile]
 
 
-def inbounds(p, mr, mi):
+def in_bounds(p, mr, mi):
     return p.real >= 0 and p.imag >= 0 and p.real <= mr and p.imag <= mi
 
 
@@ -40,7 +40,7 @@ def shine(start, tiles):
         p, d = q.pop()
         for nd in reflect(d, tiles[p]):
             np = p + nd
-            if inbounds(np, mr, mi) and (np, nd) not in seen:
+            if in_bounds(np, mr, mi) and (np, nd) not in seen:
                 q += [(np, nd)]
                 seen.add((np, nd))
     return len(set(p for p, _ in seen))

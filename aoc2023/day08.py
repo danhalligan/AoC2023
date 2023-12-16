@@ -10,9 +10,7 @@ def parse_node(line):
 
 def parse_data(data):
     instructions, nodes = data.split("\n\n")
-    instructions = list(instructions)
-    nodes = dict(parse_node(line) for line in nodes.splitlines())
-    return instructions, nodes
+    return instructions, dict(parse_node(line) for line in nodes.splitlines())
 
 
 def part_a(data):
