@@ -6,9 +6,8 @@ def parse(data):
     }
 
 
-# This function rolls rocks, taking a list of list of tuples corresponding
-# to the indices in the array to consider.
-# This allows us to roll rocks in all 4 directions...
+# This function rolls rocks, taking a list of list of tuples corresponding to the
+# indices in the array to consider. This allows us to roll rocks in all 4 directions...
 def roll(rocks, vals):
     for row in vals:
         gaps = []
@@ -57,12 +56,11 @@ def cycle(rocks):
     roll(rocks, vals)
 
 
-# The goal here is to find a point when a rock layout repeats itself
-# To do this, we store a hash of a configuration of rocks
-# This is unique for a given configuration (which load is not!)
-# We then calculate a "burn in" period to get to the first value and the cycle
-# length till we get to it again.
-# This allows us to extrapolate to any future number of cycles...
+# The goal here is to find a point when a rock layout repeats itself. To do this, we
+# store a hash of a configuration of rocks. This is unique for a given configuration
+# (which load is not!) We then calculate a "burn in" period to get to the first value
+# and the cycle length till we get to it again. This allows us to extrapolate to any
+# future number of cycles...
 def part_b(data):
     rocks = parse(data)
     hashes, loads = [], []

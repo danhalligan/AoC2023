@@ -5,8 +5,7 @@ def drop1(counts):
     return tuple([counts[0] - 1] + list(counts[1:]))
 
 
-# `in_run` tracks if we're in a run of "#"s (in other words, if last character
-# was a "#")
+# `in_run` tracks if in a run of "#"s (in other words, if last character was a "#")
 @cache
 def complete(txt, counts, in_run=False):
     if not len(txt):

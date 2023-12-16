@@ -47,9 +47,8 @@ def find_path(start, data):
             return visited
 
 
-# Expand path by doubling coordinates
-# This way, we can flood fill from the outside and we'll reach
-# all cells considered exterior to path.
+# Expand path by doubling coordinates. This way, we can flood fill from the outside and
+# we'll reach all cells considered exterior to path.
 def expand_path(path):
     expanded = set()
     for x in path:
@@ -59,8 +58,8 @@ def expand_path(path):
     return expanded
 
 
-# When flood filling we pad 1 cell all the way around the path
-# We start from -1,-1 (definitely not in the path)
+# When flood filling we pad 1 cell all the way around the path. We start from -1,-1
+# (definitely not in the path)
 def flood(path):
     start = (-1, -1)
     mx = max(x for x, _ in path)

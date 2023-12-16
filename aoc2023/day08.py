@@ -25,9 +25,8 @@ def part_a(data):
     return steps
 
 
-# Here I guessed that following instructions from each starting point formed a
-# cycle back to itself. If true, then all cycles end together at the lowest
-# common multiple.
+# Here I guessed that following instructions from each starting point formed a cycle
+# back to itself. If true, then all cycles end together at the lowest common multiple.
 def part_b(data):
     instructions, nodes = parse_data(data)
     steps = {node: 0 for node in nodes.keys() if node.endswith("A")}

@@ -29,7 +29,6 @@ def part_a(data):
     return min(vals)
 
 
-# ------------------------------------------------------------------------------
 def intersection(r1, r2):
     return range(max(r1.start, r2.start), min(r1.stop, r2.stop + 1))
 
@@ -39,8 +38,8 @@ def map_range(src, fr, to):
     return range(src.start + offset, src.stop + offset)
 
 
-# convert each section of maps to from and to ranges.
-# actually we probably just need source range and offset
+# convert each section of maps to from and to ranges. Actually we probably just need
+# source range and offset.
 def convert_section(section):
     return [[range(x[1], x[1] + x[2]), range(x[0], x[0] + x[2])] for x in section]
 
@@ -51,9 +50,9 @@ def convert_seeds(seeds):
         yield range(seeds[i], seeds[i] + seeds[i + 1])
 
 
-# Take a source range (e.g. of seeds), and try to map with all maps in a
-# section. We need to track ranges of values that are not mapped with each map
-# Any of these that are left at the end are added to the mapped ranges.
+# Take a source range (e.g. of seeds), and try to map with all maps in a section. We
+# need to track ranges of values that are not mapped with each map Any of these that are
+# left at the end are added to the mapped ranges.
 def map_source(ra, section):
     tomap = [ra]
     mapped = []

@@ -43,8 +43,8 @@ def part_a(data):
     return sum((i + 1) * x[1] for i, x in enumerate(hands))
 
 
-# when considering jokers, we only ever need to consider setting them to the
-# *same* card type.
+# when considering jokers, we only ever need to consider setting them to the *same* card
+# type.
 def yield_hands(hand):
     if "J" in hand:
         for n in ["A", "K", "Q", "T", "9", "8", "7", "6", "5", "4", "3", "2"]:
