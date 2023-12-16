@@ -22,7 +22,5 @@ def part_b(data):
             boxes[hash(box)][box] = int(num)
 
     return sum(
-        i * j * v
-        for i, x in enumerate(boxes, 1)
-        for j, v in enumerate(x.values(), 1)
+        i * j * v for i, x in enumerate(boxes, 1) for j, v in enumerate(x.values(), 1)
     )
