@@ -3,18 +3,17 @@ U, D, R, L = -1, +1, +1j, -1j
 
 
 def parse(data):
-    tiles = {
+    return {
         complex(i, j): x
         for i, line in enumerate(data.splitlines())
         for j, x in enumerate(line)
     }
-    return tiles
 
 
 def maxima(tiles):
-    maxr = max(int(p.real) for p in tiles.keys())
-    maxi = max(int(p.imag) for p in tiles.keys())
-    return maxr, maxi
+    mr = max(int(p.real) for p in tiles.keys())
+    mi = max(int(p.imag) for p in tiles.keys())
+    return mr, mi
 
 
 # Reflection logic for different directions entering into a tile
@@ -39,8 +38,7 @@ def shine(start, tiles):
     seen = {start}
     while q:
         p, d = q.pop()
-        tile = tiles[p]
-        for nd in reflect(d, tile):
+        for nd in reflect(d, tiles[p]):
             np = p + nd
             if inbounds(np, mr, mi) and (np, nd) not in seen:
                 q += [(np, nd)]
