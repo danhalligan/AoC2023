@@ -33,3 +33,7 @@ def solve(days: List[int] = typer.Argument(None)):
 
 def main():
     app()
+
+
+if __name__ == "__main__":
+    main()

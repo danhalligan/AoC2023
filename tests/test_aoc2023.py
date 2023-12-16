@@ -1,7 +1,6 @@
 import importlib
 import pytest
 from itertools import product
-from aocd.examples import Example
 import pickle
 
 all_examples = pickle.load(open("tests/examples.pkl", "rb"))
@@ -18,12 +17,6 @@ def test_all(day, part):
     except AttributeError:
         pytest.skip(f"Skipping day {day}, part {part}")
     examples = all_examples[day]
-
-    # Patch examples for day 1
-    # TODO: there's a better way of doing this!
-    if day == 1:
-        eg = examples[0]
-        examples = [Example(eg.input_data, eg.answer_a)]
 
     for example in examples:
         answer = example.answers[{"a": 0, "b": 1}[part]]
