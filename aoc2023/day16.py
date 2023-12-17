@@ -11,9 +11,9 @@ def parse(data):
 
 
 def maxima(tiles):
-    mr = max(int(p.real) for p in tiles.keys())
-    mi = max(int(p.imag) for p in tiles.keys())
-    return mr, mi
+    mr = max(p.real for p in tiles.keys())
+    mi = max(p.imag for p in tiles.keys())
+    return complex(mr, mi)
 
 
 # Reflection logic for different directions entering into a tile
@@ -28,19 +28,19 @@ def reflect(d, tile):
         return {".": [D], "-": [L, R], "\\": [R], "/": [L], "|": [D]}[tile]
 
 
-def in_bounds(p, mr, mi):
-    return p.real >= 0 and p.imag >= 0 and p.real <= mr and p.imag <= mi
+def in_bounds(p, m):
+    return p.real >= 0 and p.imag >= 0 and p.real <= m.real and p.imag <= m.imag
 
 
 def shine(start, tiles):
-    mr, mi = maxima(tiles)
+    m = maxima(tiles)
     q = [start]
     seen = {start}
     while q:
         p, d = q.pop()
         for nd in reflect(d, tiles[p]):
             np = p + nd
-            if in_bounds(np, mr, mi) and (np, nd) not in seen:
+            if in_bounds(np, m) and (np, nd) not in seen:
                 q += [(np, nd)]
                 seen.add((np, nd))
     return len(set(p for p, _ in seen))
@@ -52,10 +52,13 @@ def part_a(data):
 
 def part_b(data):
     tiles = parse(data)
-    mr, mi = maxima(tiles)
-    return max(
-        max(shine((complex(r, 0), R), tiles) for r in range(mr + 1)),
-        max(shine((complex(r, mi), L), tiles) for r in range(mr + 1)),
-        max(shine((complex(0, i), D), tiles) for i in range(mi + 1)),
-        max(shine((complex(mr, i), U), tiles) for i in range(mi + 1)),
+    m = maxima(tiles)
+    rr = range(int(m.real) + 1)
+    ri = range(int(m.imag) + 1)
+    starts = (
+        [(complex(r, 0), R) for r in rr]
+        + [(complex(r, m.imag), L) for r in rr]
+        + [(complex(0, i), D) for i in ri]
+        + [(complex(m.real, i), U) for i in ri]
     )
+    return max(shine(s, tiles) for s in starts)

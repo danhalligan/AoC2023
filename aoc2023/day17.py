@@ -13,8 +13,8 @@ def parse(data):
 
 
 def maxima(tiles):
-    mr = max(int(p.real) for p in tiles.keys())
-    mi = max(int(p.imag) for p in tiles.keys())
+    mr = max(p.real for p in tiles.keys())
+    mi = max(p.imag for p in tiles.keys())
     return complex(mr, mi)
 
 
