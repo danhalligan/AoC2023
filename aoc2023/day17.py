@@ -12,12 +12,6 @@ def parse(data):
     }
 
 
-def maxima(tiles):
-    mr = max(p.real for p in tiles.keys())
-    mi = max(p.imag for p in tiles.keys())
-    return complex(mr, mi)
-
-
 # Reflection logic for different directions entering into a tile
 def directions(d, count):
     nd = {R: [R, U, D], L: [L, U, D], U: [U, R, L], D: [D, R, L]}[d]
@@ -26,17 +20,13 @@ def directions(d, count):
     return nd
 
 
-def in_bounds(p, m):
-    return p.real >= 0 and p.imag >= 0 and p.real <= m.real and p.imag <= m.imag
-
-
 # h: heat score
 # p: position (complex number)
 # d: direction (complex number)
 # c: direction count (moves in constant direction till now)
 # e: an "entry count" to break ties when using heapq
 def find_path(grid, dfn):
-    m = maxima(grid)
+    m = [*grid][-1]
     q = []
     heappush(q, (0, (0, 0j, R, 1)))
     heappush(q, (0, (1, 0j, D, 1)))
@@ -46,7 +36,7 @@ def find_path(grid, dfn):
         h, (_, p, d, c) = heappop(q)
         for nd in dfn(d, c):
             np = p + nd
-            if in_bounds(np, m):
+            if np in grid:
                 nh = h + grid[np]
                 nc = c + 1 if nd == d else 1
                 if (np, nd, nc) not in seen or nh < seen[(np, nd, nc)][0]:
