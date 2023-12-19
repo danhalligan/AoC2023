@@ -40,13 +40,9 @@ def part_a(data):
 
 def part_b(data):
     tiles = parse(data)
-    m = [*tiles][-1]
-    rr = range(int(m.real) + 1)
-    ri = range(int(m.imag) + 1)
-    starts = (
-        [(complex(r, 0), R) for r in rr]
-        + [(complex(r, m.imag), L) for r in rr]
-        + [(complex(0, i), D) for i in ri]
-        + [(complex(m.real, i), U) for i in ri]
+    return max(
+        shine((p, d), tiles)
+        for p in tiles
+        for d in [1, -1, 1j, -1j]
+        if p - d not in tiles
     )
-    return max(shine(s, tiles) for s in starts)
