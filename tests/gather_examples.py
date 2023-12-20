@@ -30,6 +30,8 @@ def get_examples(day):
                 "525152",
             )
         ]
+    if day == 20:
+        examples = [Example(eg.input_data, "32000000")]
     return day, examples
 
 

@@ -1,4 +1,4 @@
-from aoc2023.modules import *
+from .modules import Broadcaster, FlipFlop, Conjunction, Untyped
 from math import lcm
 import re
 
@@ -46,8 +46,7 @@ def run(modules, packets):
     while packets:
         packet = packets.pop(0)
         count[packet[2]] += 1
-        for p in modules[packet[1]].exe(packet):
-            packets += [p]
+        packets += list(modules[packet[1]].exe(packet))
     return count["low"], count["high"]
 
 
@@ -68,10 +67,9 @@ def track_module(data, modules, name):
     while True:
         count += 1
         try:
-            _ = run(modules, [("button", "broadcaster", "low")])
+            run(modules, [("button", "broadcaster", "low")])
         except:
-            break
-    return count
+            return count
 
 
 # rx is the final untyped module
