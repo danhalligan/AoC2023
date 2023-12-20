@@ -1,51 +1,70 @@
-class FlipFlop:
+from dataclasses import dataclass
+
+
+@dataclass
+class Packet:
+    fr: str
+    to: str
+    val: str
+
+
+def ModuleFactory(name, dests):
+    """Factory Method"""
+    if name == "broadcaster":
+        return Broadcaster("broadcaster", dests)
+    elif name.startswith("%"):
+        return FlipFlop(name[1:], dests)
+    elif name.startswith("&"):
+        return Conjunction(name[1:], dests)
+    else:
+        return Module(name, dests)
+
+
+class Module:
     def __init__(self, name, dests):
-        self.state = "low"
-        self.name = name
         self.dests = dests
+        self.name = name
+
+    def setup(self, rnetwork):
+        self.track = False
+        self.inputs = rnetwork[self.name]
+
+    def exe(self, _):
+        return []
+
+
+class FlipFlop(Module):
+    def setup(self, rnetwork):
+        self.track = False
+        self.inputs = rnetwork[self.name]
+        self.state = "low"
 
     def exe(self, packet):
-        fr, to, pulse = packet
-        if pulse == "low":
+        if packet.val == "low":
             self.state = "low" if self.state == "high" else "high"
             for dest in self.dests:
                 # print(self.name, self.state, "->", dest)
-                yield (self.name, dest, self.state)
+                yield Packet(self.name, dest, self.state)
 
 
-class Conjunction:
-    def __init__(self, name, dests, inputs):
-        self.dests = dests
-        self.name = name
-        self.mem = {x: "low" for x in inputs}
+class Conjunction(Module):
+    def setup(self, rnetwork):
         self.track = False
+        self.inputs = rnetwork[self.name]
+        self.mem = {x: "low" for x in self.inputs}
 
     def exe(self, packet):
-        fr, to, pulse = packet
-        self.mem[fr] = pulse
+        self.mem[packet.fr] = packet.val
         out = "low" if all(x == "high" for x in self.mem.values()) else "high"
         if self.track and out == "high":
             raise Exception("High found")
         for dest in self.dests:
             # print(self.name, out, "->", dest)
-            yield (self.name, dest, out)
+            yield Packet(self.name, dest, out)
 
 
-class Broadcaster:
-    def __init__(self, dests):
-        self.name = "broadcaster"
-        self.dests = dests
-
+class Broadcaster(Module):
     def exe(self, packet):
-        fr, to, pulse = packet
         for dest in self.dests:
             # print("broadcaster", pulse, "->", dest)
-            yield (self.name, dest, pulse)
-
-
-class Untyped:
-    def __init__(self):
-        self.name = "output"
-
-    def exe(self, packet):
-        return []
+            yield Packet(self.name, dest, packet.val)
