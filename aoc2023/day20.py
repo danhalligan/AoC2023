@@ -3,44 +3,44 @@ from math import lcm
 from collections import defaultdict
 
 
-def invert_network(network):
-    rnetwork = defaultdict(list)
-    for k, v in network.items():
-        for m in v:
-            rnetwork[m] += [k]
-    return rnetwork
-
-
 def parse_modules(data):
     network = {}
     modules = {}
     for line in data.splitlines():
         name, dests = line.split(" -> ")
-        dests = dests.split(", ")
-        mod = ModuleFactory(name, dests)
+        mod = ModuleFactory(name)
         modules[mod.name] = mod
-        network[mod.name] = dests
+        network[mod.name] = dests.split(", ")
 
     # add modules that only appear as outputs
     outputs = set(x for v in network.values() for x in v)
     inputs = set(network.keys())
     for x in outputs - inputs:
-        modules[x] = ModuleFactory(x, dests)
+        modules[x] = ModuleFactory(x)
+        network[x] = []
     return modules, network
 
 
 def setup_modules(modules, network):
-    rnetwork = invert_network(network)
-    for k in modules.keys():
-        modules[k].setup(rnetwork)
+    destinations = defaultdict(list)
+    for k, v in network.items():
+        for m in v:
+            destinations[m] += [k]
+    for mod in modules.values():
+        mod.inputs = destinations[mod.name]
+        mod.setup()
 
 
-def run(modules, packets):
+def run(modules, network, packets):
     count = {"low": 0, "high": 0}
     while packets:
         packet = packets.pop(0)
         count[packet.val] += 1
-        packets += list(modules[packet.to].exe(packet))
+        mod = modules[packet.to]
+        val = mod.exe(packet)
+        if val:
+            for dest in network[mod.name]:
+                packets += [Packet(mod.name, dest, val)]
     return count["low"], count["high"]
 
 
@@ -49,7 +49,7 @@ def part_a(data):
     setup_modules(modules, network)
     low, high = 0, 0
     for _ in range(1000):
-        counts = run(modules, [Packet("button", "broadcaster", "low")])
+        counts = run(modules, network, [Packet("button", "broadcaster", "low")])
         low += counts[0]
         high += counts[1]
     return low * high
@@ -62,7 +62,7 @@ def track_module(modules, network, name):
     while True:
         count += 1
         try:
-            run(modules, [Packet("button", "broadcaster", "low")])
+            run(modules, network, [Packet("button", "broadcaster", "low")])
         except Exception:
             return count
 

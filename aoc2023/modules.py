@@ -8,26 +8,22 @@ class Packet:
     val: str
 
 
-def ModuleFactory(name, dests):
-    """Factory Method"""
-    if name == "broadcaster":
-        return Module("broadcaster", dests)
-    elif name.startswith("%"):
-        return FlipFlop(name[1:], dests)
+def ModuleFactory(name):
+    if name.startswith("%"):
+        return FlipFlop(name[1:])
     elif name.startswith("&"):
-        return Conjunction(name[1:], dests)
+        return Conjunction(name[1:])
     else:
-        return Module(name, [])
+        return Module(name)
 
 
 class Module:
-    def __init__(self, name, dests):
-        self.dests = dests
+    def __init__(self, name, inputs=None):
         self.name = name
+        self.inputs = inputs
 
-    def setup(self, rnetwork):
+    def setup(self):
         self.track = False
-        self.inputs = rnetwork[self.name]
 
     def calculate(self, packet):
         return packet.val
@@ -36,15 +32,12 @@ class Module:
         val = self.calculate(packet)
         if self.track and val == "high":
             raise Exception("High found")
-        if val:
-            for dest in self.dests:
-                yield Packet(self.name, dest, val)
+        return val
 
 
 class FlipFlop(Module):
-    def setup(self, rnetwork):
+    def setup(self):
         self.track = False
-        self.inputs = rnetwork[self.name]
         self.state = "low"
 
     def calculate(self, packet):
@@ -54,9 +47,8 @@ class FlipFlop(Module):
 
 
 class Conjunction(Module):
-    def setup(self, rnetwork):
+    def setup(self):
         self.track = False
-        self.inputs = rnetwork[self.name]
         self.mem = {x: "low" for x in self.inputs}
 
     def calculate(self, packet):
