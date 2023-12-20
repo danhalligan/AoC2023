@@ -21,10 +21,6 @@ def parse_rule(txt):
 
 
 def parse_workflow(line):
-    name, rules = re.match(r"(\w+){(.+)}", line).groups()
-    rules = rules.split(",")
-    last = rules.pop()
-
     def workflow(part):
         for rule in rules:
             test, val = parse_rule(rule)
@@ -32,6 +28,9 @@ def parse_workflow(line):
                 return val
         return last
 
+    name, rules = re.match(r"(\w+){(.+)}", line).groups()
+    rules = rules.split(",")
+    last = rules.pop()
     return name, workflow
 
 
@@ -53,10 +52,6 @@ def part_a(data):
 
 # Returns a function that takes a part and returns two sub parts
 def parse_rule2(txt):
-    cond, to = txt.split(":")
-    key, op, val = re.match(r"(.+)([><])(.+)", cond).groups()
-    val = int(val)
-
     def run(part):
         parts = [copy(part), copy(part)]
         if op == ">":
@@ -67,6 +62,9 @@ def parse_rule2(txt):
             parts[1][key] = range(val, part[key].stop)
         return parts
 
+    cond, _ = txt.split(":")
+    key, op, val = re.match(r"(.+)([><])(.+)", cond).groups()
+    val = int(val)
     return run
 
 
