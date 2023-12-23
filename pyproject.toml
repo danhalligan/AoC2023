@@ -10,6 +10,7 @@ python = "^3.11"
 aocd = "^0.1"
 typer = "^0.9.0"
 datetime = "^5.3"
+networkx = "^3.2.1"
 
 
 [tool.poetry.group.dev.dependencies]
