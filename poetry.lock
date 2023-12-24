@@ -133,6 +133,17 @@ jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
 uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
+name = "boto"
+version = "2.49.0"
+description = "Amazon Web Services Library"
+optional = false
+python-versions = "*"
+files = [
+    {file = "boto-2.49.0-py2.py3-none-any.whl", hash = "sha256:147758d41ae7240dc989f0039f27da8ca0d53734be0eb869ef16e3adcfa462e8"},
+    {file = "boto-2.49.0.tar.gz", hash = "sha256:ea0d3b40a2d852767be77ca343b58a9e3a4b00d9db440efb8da74b4e58025e5a"},
+]
+
+[[package]]
 name = "cffi"
 version = "1.16.0"
 description = "Foreign Function Interface for Python calling C code."
@@ -1102,6 +1113,34 @@ files = [
 ]
 
 [[package]]
+name = "z3"
+version = "0.2.0"
+description = "Backup ZFS snapshots to S3"
+optional = false
+python-versions = "*"
+files = [
+    {file = "z3-0.2.0.tar.gz", hash = "sha256:34819e964d71e1474f933b34b9e65f0d021ccfc9d9edbbded54d54c1a9352b90"},
+]
+
+[package.dependencies]
+boto = "*"
+
+[[package]]
+name = "z3-solver"
+version = "4.12.4.0"
+description = "an efficient SMT solver library"
+optional = false
+python-versions = "*"
+files = [
+    {file = "z3-solver-4.12.4.0.tar.gz", hash = "sha256:f692c87437be8d585ebca124355cd6488d60331289f6bbebbde65cd497205128"},
+    {file = "z3_solver-4.12.4.0-py2.py3-none-macosx_11_0_arm64.whl", hash = "sha256:956daa69d3c7017f704c64d11c9ed880e06f177923e9af695a03034fc0e2e36d"},
+    {file = "z3_solver-4.12.4.0-py2.py3-none-macosx_11_7_x86_64.whl", hash = "sha256:6ffffdb41d714b6683cd87d8cf7eaa0e94eb40a6d5eca3636cb90a95d4e6760e"},
+    {file = "z3_solver-4.12.4.0-py2.py3-none-manylinux2014_x86_64.whl", hash = "sha256:03ce2639eced8a4d4bd432ebab15a6b1cb36119ba6a2854c01768ee2cd596c37"},
+    {file = "z3_solver-4.12.4.0-py2.py3-none-win32.whl", hash = "sha256:50011e915e97c4d262a010ea0403081b2af71c8474b27c53185407beb30b6ac7"},
+    {file = "z3_solver-4.12.4.0-py2.py3-none-win_amd64.whl", hash = "sha256:fbd7faea88bd32e6ba362913d1108d0bcb298df57154538a9bb2684757c35d0b"},
+]
+
+[[package]]
 name = "zope-interface"
 version = "6.1"
 description = "Interfaces for Python"
@@ -1157,4 +1196,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "fb7bdeb22f00d54d517f4386fd0485d4de44a646a4532379b5460957a6f2098a"
+content-hash = "02e47b8c6735fb0b73d194d95337c02c72007eb2d313d86912baf3da3b4dbbf8"

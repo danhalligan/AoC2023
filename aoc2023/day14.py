@@ -75,4 +75,4 @@ def part_b(data):
 
     burn_in, repeat = [i for i, x in enumerate(hashes) if val == x]
     cycle_length = repeat - burn_in
-    return loads[burn_in + ((1000000000 - burn_in) % cycle_length)]
+    return loads[burn_in + ((1_000_000_000 - burn_in) % cycle_length)]
