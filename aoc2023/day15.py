@@ -15,7 +15,7 @@ def part_b(data):
     boxes = [dict() for _ in range(256)]
 
     for instr in data:
-        box, val, num = re.match("(.+)([=-])(\d+)*", instr).groups()
+        box, val, num = re.match(r"(.+)([=-])(\d+)*", instr).groups()
         if val == "-":
             boxes[hash(box)].pop(box, 0)
         if val == "=":
