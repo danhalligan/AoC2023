@@ -1,5 +1,5 @@
 import numpy as np
-
+import os
 
 U, D, R, L = -1, +1, +1j, -1j
 
@@ -11,6 +11,7 @@ def parse(data):
             grid[complex(i, j)] = x
             if x == "S":
                 start = complex(i, j)
+                grid[complex(i, j)] = "."
     return grid, start
 
 
@@ -26,7 +27,8 @@ def step(grid, pos):
 def part_a(data):
     grid, start = parse(data)
     pos = [start]
-    for _ in range(64):
+    s = 6 if "PYTEST_CURRENT_TEST" in os.environ else 64
+    for _ in range(s):
         pos = step(grid, pos)
     return len(pos)
 

@@ -1,5 +1,6 @@
 from itertools import combinations
 from z3 import Solver, Real
+import os
 
 
 def parse(data):
@@ -35,8 +36,10 @@ def in_range(pos, min, max):
 
 def part_a(data):
     hail = parse(data)
-    minx = 200_000_000_000_000
-    maxx = 400_000_000_000_000
+    if "PYTEST_CURRENT_TEST" in os.environ:
+        minx, maxx = 7, 27
+    else:
+        minx, maxx = 200_000_000_000_000, 400_000_000_000_000
     tot = 0
     for h1, h2 in combinations(hail, 2):
         try:

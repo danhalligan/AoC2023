@@ -14,9 +14,8 @@ def drop(b, n):
 
 
 def parse(data):
-    # bricks = {}
     bricks = []
-    for i, line in enumerate(data.splitlines()):
+    for line in data.splitlines():
         a, b = line.split("~")
         a = [int(x) for x in a.split(",")]
         b = [int(x) for x in b.split(",")]

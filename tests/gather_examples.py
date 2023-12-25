@@ -33,7 +33,11 @@ def get_examples(day):
     if day == 20:
         examples = [Example(eg.input_data, "32000000")]
     if day == 21:
-        examples = [Example(eg.input_data)]
+        examples = [Example(eg.input_data, "16")]
+    if day == 23:
+        examples = [Example(eg.input_data, "94", "154")]
+    if day == 24:
+        examples = [Example(eg.input_data, "2", "47")]
     return day, examples
 
 
