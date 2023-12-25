@@ -11,25 +11,9 @@ def get_examples(day):
 
     examples = puzzle.examples
 
-    # Patch examples for day 1
+    # Patch examples for specific days
     # TODO: there must be a better way of doing this!
     eg = puzzle.examples[0]
-    if day == 1:
-        examples = [Example(eg.input_data, eg.answer_a)]
-    if day == 6:
-        examples = [Example(eg.input_data, "288", "71503")]
-    if day == 8:
-        examples = [Example(eg.input_data, "2", None)]
-    if day == 10:
-        examples = [Example("..F7.\n.FJ|.\nSJ.L7\n|F--J\nLJ...", "8", None)]
-    if day == 12:
-        examples = [
-            Example(
-                "???.### 1,1,3\n.??..??...?##. 1,1,3\n?#?#?#?#?#?#?#? 1,3,1,6\n????.#...#... 4,1,1\n????.######..#####. 1,6,5\n?###???????? 3,2,1",
-                "21",
-                "525152",
-            )
-        ]
     if day == 20:
         examples = [Example(eg.input_data, "32000000")]
     if day == 21:
