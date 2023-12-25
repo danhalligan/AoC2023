@@ -48,7 +48,7 @@ def part_a(data):
 
 
 # I got stuck here and looked to reddit for answers involving Z3.
-# You only need enough hailstones (3) to fully determine the unknowns in
+# You only need enough hailstones to fully determine the unknowns in
 # the system of equations...
 def part_b(data):
     hail = parse(data)

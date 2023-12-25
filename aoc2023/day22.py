@@ -1,4 +1,3 @@
-from aocd.models import Puzzle
 from copy import deepcopy
 
 
@@ -65,6 +64,8 @@ def part_a(data):
     return count
 
 
+# This is a horrible brute force type approach that runs v slowly...
+# I literally clone all bricks, remove a brick and then see how many will drop
 def part_b(data):
     bricks = parse(data)
     bricks.sort(key=lambda x: min(x["z"]))  # sort bricks by min z-coordinate
